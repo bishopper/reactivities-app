@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Styles.css";
 import axios from "axios";
-import { Header } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { Activity } from "../models/activity";
 import Navbar from "./Navbar";
+import ActivityDashboard from "../features/activities/dashboard/ActivityDashboard";
 
 function App() {
 	const [activities, SetActivities] = useState<Activity[]>([]);
@@ -18,6 +19,9 @@ function App() {
 	return (
 		<>
 			<Navbar />
+			<Container style={{ marginTop: "7em" }}>
+				<ActivityDashboard activities={activities} />
+			</Container>
 		</>
 	);
 }
