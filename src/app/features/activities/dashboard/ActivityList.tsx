@@ -1,5 +1,4 @@
 import {
-	ItemGroup,
 	ItemHeader,
 	Segment,
 	ItemContent,
@@ -8,6 +7,7 @@ import {
 	ItemExtra,
 	Button,
 	Label,
+	Item,
 } from "semantic-ui-react";
 import { Activity } from "../../../models/activity";
 
@@ -19,24 +19,26 @@ const ActivityList = ({ activities }: Props) => {
 	return (
 		<>
 			<Segment>
-				<ItemGroup>
+				<Item.Group divided>
 					{activities.map((activity) => (
-						<ItemContent>
-							<ItemHeader as="a">{activity.title}</ItemHeader>
-							<ItemMeta>{activity.date}</ItemMeta>
-							<ItemDescription>
-								<div>{activity.description}</div>
-								<div>
-									{activity.city} , {activity.venue}
-								</div>
-							</ItemDescription>
-							<ItemExtra>
-								<Button floated="right" content="View" color="blue" />
-								<Label basic content={activity.category} />
-							</ItemExtra>
-						</ItemContent>
+						<Item key={activity.id}>
+							<ItemContent>
+								<ItemHeader as="a">{activity.title}</ItemHeader>
+								<ItemMeta>{activity.date}</ItemMeta>
+								<ItemDescription>
+									<div>{activity.description}</div>
+									<div>
+										{activity.city} , {activity.venue}
+									</div>
+								</ItemDescription>
+								<ItemExtra>
+									<Button floated="right" content="View" color="blue" />
+									<Label basic content={activity.category} />
+								</ItemExtra>
+							</ItemContent>
+						</Item>
 					))}
-				</ItemGroup>
+				</Item.Group>
 			</Segment>
 		</>
 	);
