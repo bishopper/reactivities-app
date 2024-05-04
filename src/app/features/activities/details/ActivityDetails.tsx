@@ -3,9 +3,15 @@ import { Activity } from "../../../models/activity";
 
 interface Props {
 	activity: Activity;
+	cancelSelectedActivity: () => void;
+	openForm: (id?: string) => void;
 }
 
-const ActivityDetails = ({ activity }: Props) => {
+const ActivityDetails = ({
+	activity,
+	cancelSelectedActivity,
+	openForm,
+}: Props) => {
 	return (
 		<>
 			<Card>
@@ -19,7 +25,20 @@ const ActivityDetails = ({ activity }: Props) => {
 				</Card.Content>
 				<Card.Content extra>
 					<Button.Group widths="2">
-						<Button basic color="blue" content="edit" />
+						<Button
+							onClick={() => {
+								openForm(activity.id);
+							}}
+							basic
+							color="blue"
+							content="Edit"
+						/>
+						<Button
+							onClick={cancelSelectedActivity}
+							basic
+							color="grey"
+							content="Cancel"
+						/>
 					</Button.Group>
 				</Card.Content>
 			</Card>
