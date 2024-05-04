@@ -7,8 +7,14 @@ import Navbar from "./Navbar";
 import ActivityDashboard from "../features/activities/dashboard/ActivityDashboard";
 
 function App() {
+	// states
 	const [activities, SetActivities] = useState<Activity[]>([]);
+	const [selectedActivity, setSelectedActivity] = useState<
+		Activity | undefined
+	>(undefined);
+	const [editMode, setEditMode] = useState(false);
 
+	// fetch data
 	useEffect(() => {
 		axios.get("https://localhost:7263/api/activities").then((response) => {
 			console.log(response);
@@ -16,11 +22,37 @@ function App() {
 		});
 	}, []);
 
+	// handlers
+	const SelectedActivityHandler = (id: string) => {
+		setSelectedActivity(activities.find((a) => a.id === id));
+	};
+
+	const CancelSelectedActivityHandler = () => {
+		setSelectedActivity(undefined);
+	};
+
+	const FormOpenHandler = (id?: string) => {
+		id ? SelectedActivityHandler(id) : CancelSelectedActivityHandler;
+		setEditMode(true);
+	};
+
+	const FormCloseHandler = () => {
+		setEditMode(false);
+	};
+
 	return (
 		<>
-			<Navbar />
+			<Navbar openForm={FormOpenHandler} />
 			<Container style={{ marginTop: "7em" }}>
-				<ActivityDashboard activities={activities} />
+				<ActivityDashboard
+					activities={activities}
+					selectedActivity={selectedActivity}
+					selectActivity={SelectedActivityHandler}
+					cancelSelectedActivity={CancelSelectedActivityHandler}
+					editMode={editMode}
+					openForm={FormOpenHandler}
+					closeForm={FormCloseHandler}
+				/>
 			</Container>
 		</>
 	);
